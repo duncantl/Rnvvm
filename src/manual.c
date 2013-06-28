@@ -27,3 +27,13 @@ R_auto_nvvmGetProgramLog(SEXP r_prog,  SEXP r_bufLen)
 } 
 
 
+SEXP
+R_nvvmErrorInfo(nvvmResult status)
+{
+    SEXP ans;
+    PROTECT(ans = ScalarInteger(status));
+    SET_CLASS(ans, mkString("nvvmResult"));
+    SET_NAMES(ans, nvvmGetErrorString(status));
+    UNPROTECT(1);
+    return(ans);  
+}

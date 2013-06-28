@@ -1,6 +1,8 @@
 import(methods)
 import(RAutoGenRunTime)
 
+useDynLib(Rnvvm)
+
 export(
 addModuleToProgram,
 compileProgram,
