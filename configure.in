@@ -1,0 +1,39 @@
+AC_INIT(src/Rnvvm.h)
+
+if test -z "$LIBNVVM_HOME" ; then 
+
+AC_PATH_PROGS(NVCC_BIN, nvcc)
+if test $NVCC_BIN ; then
+ CUDA_DIR=`dirname `which $NVCC_BIN``
+fi
+
+if test -z "$CUDA_DIR" ; then
+  if test -r "/usr/local/cuda" ; then
+     CUDA_DIR=/usr/local/cuda
+  elif test -r "/usr/local/cuda-5.0" ; then
+     CUDA_DIR=/usr/local/cuda-5.0
+  else
+    echo "Cannot find libnvvm"
+    exit 2
+  fi
+fi
+
+if test -e $CUDA_DIR/nvvm ; then
+ LIBNVVM=$CUDA_DIR/nvvm
+else
+  echo "Cannot find nvvm in $CUDA_DIR"
+  exit 3
+fi
+
+fi # -z LIBNVVM_HOME
+
+LIBNVVM_INC=$LIBNVVM/include
+LIBNVVM_LIB=$LIBNVVM/lib
+
+
+
+AC_SUBST(LIBNVVM_INC)
+AC_SUBST(LIBNVVM_LIB)
+
+
+AC_OUTPUT(src/Makevars)

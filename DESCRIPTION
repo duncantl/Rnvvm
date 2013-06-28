@@ -1,0 +1,13 @@
+Package: Rnvvm
+Version: 0.1-0
+Title: R bindings for NVIDIA's libNVVM 
+Description: This package is an interface to the routines
+ in libNVVM which is used to create PTX from LVVM IR code.
+SystemRequirements: CUDA SDK(>= 5.5)
+Maintainer: Duncan Temple Lang <duncan@r-project.org>
+Depends: methods
+Author: Duncan Temple Lang
+Imports: RAutoGenRunTime, methods
+License: BSD
+
+

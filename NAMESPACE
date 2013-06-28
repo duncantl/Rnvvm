@@ -1,0 +1,13 @@
+import(methods)
+import(RAutoGenRunTime)
+
+export(
+addModuleToProgram,
+compileProgram,
+createProgram,
+destroyProgram,
+getCompiledResultSize,
+getErrorString,
+getProgramLogSize,
+verifyProgram,
+version)
