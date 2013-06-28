@@ -1,0 +1,2 @@
+setClass("nvvmProgram", contains = "RNativeReference")
+
