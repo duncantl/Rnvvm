@@ -1,6 +1,7 @@
 addModuleToProgram <-
-function (prog, buffer, size, name) 
+function (prog, buffer, name = "", size = nchar(buffer)) 
 {
+    buffer <- paste(buffer, collapse = "\n")
     ans = .Call("R_auto_nvvmAddModuleToProgram", as(prog, "nvvmProgram"), 
         as(buffer, "character"), as(size, "size_t"), as(name, 
             "character"))
@@ -9,7 +10,7 @@ function (prog, buffer, size, name)
     ans
 }
 compileProgram <-
-function (prog, options, numOptions = length(options)) 
+function (prog, options, numOptions = length(as(options, "character"))) 
 {
     ans = .Call("R_auto_nvvmCompileProgram", as(prog, "nvvmProgram"), 
         as(numOptions, "integer"), as(options, "character"))
@@ -59,7 +60,7 @@ function (prog)
     ans
 }
 verifyProgram <-
-function (prog, options, numOptions = length(options)) 
+function (prog, options, numOptions = length(as(options, "character"))) 
 {
     ans = .Call("R_auto_nvvmVerifyProgram", as(prog, "nvvmProgram"), 
         as(numOptions, "integer"), as(options, "character"))

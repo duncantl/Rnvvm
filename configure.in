@@ -4,7 +4,9 @@ if test -z "$LIBNVVM_HOME" ; then
 
 AC_PATH_PROGS(NVCC_BIN, nvcc)
 if test $NVCC_BIN ; then
- CUDA_DIR=`dirname `which $NVCC_BIN``
+ TMP=`which $NVCC_BIN`
+ TMP=`dirname $TMP`
+ CUDA_DIR=`dirname $TMP`
 fi
 
 if test -z "$CUDA_DIR" ; then
@@ -28,8 +30,14 @@ fi
 fi # -z LIBNVVM_HOME
 
 LIBNVVM_INC=$LIBNVVM/include
-LIBNVVM_LIB=$LIBNVVM/lib
 
+if test -e "$LIBNVVM/lib64" ; then
+  LIBNVVM_LIB=$LIBNVVM/lib64
+else
+  LIBNVVM_LIB=$LIBNVVM/lib
+fi
+
+echo "nvvm in $LIBNVVM"
 
 
 AC_SUBST(LIBNVVM_INC)

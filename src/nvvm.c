@@ -1,5 +1,6 @@
 #include "Rnvvm.h"
 
+
 SEXP R_auto_nvvmGetErrorString(SEXP r_result)
 {
     SEXP r_ans = R_NilValue;
@@ -12,6 +13,7 @@ SEXP R_auto_nvvmGetErrorString(SEXP r_result)
     
     return(r_ans);
 }
+
 SEXP
 R_auto_nvvmVersion()
 {
@@ -23,11 +25,17 @@ R_auto_nvvmVersion()
     if(ans)
        return(R_nvvmErrorInfo(ans));
     PROTECT(r_ans = NEW_LIST(2));
+    SEXP r_names;
+    PROTECT(r_names = NEW_CHARACTER(2));
     SET_VECTOR_ELT(r_ans, 0, ScalarInteger(major));
     SET_VECTOR_ELT(r_ans, 1, ScalarInteger(minor));
-    UNPROTECT(1);
+    SET_STRING_ELT(r_names, 0, mkChar("major"));
+    SET_STRING_ELT(r_names, 1, mkChar("minor"));
+    SET_NAMES(r_ans, r_names);
+    UNPROTECT(2);
     return(r_ans);
 }
+
 SEXP
 R_auto_nvvmCreateProgram()
 {
@@ -40,18 +48,20 @@ R_auto_nvvmCreateProgram()
     r_ans = R_createRef(prog, "nvvmProgram") ;
     return(r_ans);
 }
+
 SEXP R_auto_nvvmDestroyProgram(SEXP r_prog)
 {
     SEXP r_ans = R_NilValue;
-    nvvmProgram * prog = GET_REF(r_prog, nvvmProgram );
+    nvvmProgram  prog = GET_REF(r_prog, nvvmProgram );
     
     nvvmResult ans;
-    ans = nvvmDestroyProgram(prog);
+    ans = nvvmDestroyProgram(&prog);
     
     r_ans = Renum_convert_nvvmResult(ans) ;
     
     return(r_ans);
 }
+
 SEXP R_auto_nvvmAddModuleToProgram(SEXP r_prog, SEXP r_buffer, SEXP r_size, SEXP r_name)
 {
     SEXP r_ans = R_NilValue;
@@ -67,6 +77,7 @@ SEXP R_auto_nvvmAddModuleToProgram(SEXP r_prog, SEXP r_buffer, SEXP r_size, SEXP
     
     return(r_ans);
 }
+
 SEXP R_auto_nvvmCompileProgram(SEXP r_prog, SEXP r_numOptions, SEXP r_options)
 {
     SEXP r_ans = R_NilValue;
@@ -81,6 +92,7 @@ SEXP R_auto_nvvmCompileProgram(SEXP r_prog, SEXP r_numOptions, SEXP r_options)
     
     return(r_ans);
 }
+
 SEXP R_auto_nvvmVerifyProgram(SEXP r_prog, SEXP r_numOptions, SEXP r_options)
 {
     SEXP r_ans = R_NilValue;
@@ -95,6 +107,7 @@ SEXP R_auto_nvvmVerifyProgram(SEXP r_prog, SEXP r_numOptions, SEXP r_options)
     
     return(r_ans);
 }
+
 SEXP
 R_auto_nvvmGetCompiledResultSize(SEXP r_prog)
 {
@@ -108,6 +121,7 @@ R_auto_nvvmGetCompiledResultSize(SEXP r_prog)
     r_ans = ScalarReal(bufferSizeRet) ;
     return(r_ans);
 }
+
 SEXP
 R_auto_nvvmGetProgramLogSize(SEXP r_prog)
 {

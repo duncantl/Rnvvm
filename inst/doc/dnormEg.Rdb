@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<article xmlns:r="http://www.r-project.org"
+         xmlns:xi="http://www.w3.org/2003/XInclude">
+
+<articleinfo>
+
+<title></title>
+
+<author><firstname>Duncan</firstname><surname>Temple Lang</surname>
+  <affiliation><orgname>University of California at Davis</orgname>
+               <orgdiv>Department of Statistics</orgdiv>
+  </affiliation>
+</author>
+</articleinfo>
+
+<section>
+<title></title>
+
+<!-- Need meta data on the kernel function -->
+
+<para>
+This is a short, simple and exploratory 
+example of using libNVVM within <r/>.
+The idea is  reasonably simple.
+We write a function in <r/> and compile it using
+<omg:pkg>Rllvm</omg:pkg> to <llvm/>'s IR language.
+We then use libNVVM to convert the  IR code to PTX, in memory.
+We then use the <omg:pkg>RCUDA</omg:pkg>  package to load
+the PTX code into a usable form and then invoke the
+kernel.
+This illustrates writing a kernel function directly in <r/>
+and then invoking it without using sub-process to compile the code,
+but rather doing this in the <r/> session.
+
+</para>
+
+<para>
+We start by writing a simple <r/> function which computes
+the normal density for a single value.
+<r:function>
+Dnorm = function(x, mu = 0, sd = 1)
+         1/sqrt(2 * pi * sd^2) * exp( - .5*( (x-mu)/sd ) ^2)
+</r:function>
+This is the same as <r:func>dnorm</r:func>, but not vectorized
+and so a lot slower.  When we compile it with <llvm/>, it will be
+close to as fast as the built-in version i <r/>.
+However, one of the advantages is that we will be able to run the
+computations in parallel on a GPU.
+</para>
+
+<para>
+We now compile this code into <llvm/> IR using the <omg:pkg>RLLVMCompile</omg:pkg>
+package using 
+<r:code>
+library(RLLVMCompile)
+fc = compileFunction(Dnorm, DoubleType, list(DoubleType, DoubleType, DoubleType))
+</r:code>
+This creates a module and we can view the IR code with 
+<r:func>showModule</r:func>.
+We can also get the IR code as text with 
+<r:code>
+ir = showModule(fc, TRUE)
+</r:code>
+</para>
+
+<para>
+We can now convert the IR code to PTX using libNVVM.
+<r:code>
+library(Rnvvm)
+ptx = generatePTX(ir, getName(fc))
+</r:code>
+This is a high-level function that uses the
+following libNVVM steps:
+<r:code eval="false">
+prog = createProgram()
+addModuleToProgram(prog, txt, "dnorm")
+compileProgram(prog, character())
+n = getCompiledResultSize(prog)
+ptx = getCompiledResult(prog, n)
+</r:code>
+</para>
+
+<para>
+The <r:func>generatePTX</r:func> function returns the PTX code as a string.
+We can now load this for use on the GPU with
+<r:code>
+library(RCUDA)
+cuGetContext()
+mod = cuModuleLoadDataEx(ptx)
+</r:code>
+</para>
+
+
+
+</section>
+</article>

@@ -1,0 +1,24 @@
+; ModuleID = 'Dnorm'
+
+@pi = constant double 0x400921FB54442D18
+
+define double @Dnorm(double %x, double %mu, double %sd) {
+entry:
+  %0 = call double @pow(double %sd, double 2.000000e+00)
+  %"2 * 3.14159265358979 * sd^2" = fmul double 0x401921FB54442D18, %0
+  %1 = call double @sqrt(double %"2 * 3.14159265358979 * sd^2")
+  %"1/sqrt(2 * 3.14159265358979 * sd^2)" = fdiv double 1.000000e+00, %1
+  %"x - mu" = fsub double %x, %mu
+  %"(x - mu)/sd" = fdiv double %"x - mu", %sd
+  %2 = call double @pow(double %"(x - mu)/sd", double 2.000000e+00)
+  %"-0.5 * ((x - mu)/sd)^2" = fmul double -5.000000e-01, %2
+  %3 = call double @exp(double %"-0.5 * ((x - mu)/sd)^2")
+  %"1/sqrt(2 * 3.14159265358979 * sd^2) * exp(-0.5 * ((x - mu)/sd)^2)" = fmul double %"1/sqrt(2 * 3.14159265358979 * sd^2)", %3
+  ret double %"1/sqrt(2 * 3.14159265358979 * sd^2) * exp(-0.5 * ((x - mu)/sd)^2)"
+}
+
+declare double @exp(double)
+
+declare double @sqrt(double)
+
+declare double @pow(double, double)

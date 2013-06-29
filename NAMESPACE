@@ -3,6 +3,9 @@ import(RAutoGenRunTime)
 
 useDynLib(Rnvvm)
 
+export(getCompiledResult, getProgramLog)
+export(generatePTX)
+
 export(
 addModuleToProgram,
 compileProgram,
@@ -13,3 +16,5 @@ getErrorString,
 getProgramLogSize,
 verifyProgram,
 version)
+
+
