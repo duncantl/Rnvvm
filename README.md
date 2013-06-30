@@ -18,5 +18,5 @@ ln -s ../../RAutoGenRunTime/inst/include/RConverters.h .
 ```
 
 
-See the index.html file for information about installing the package.
+See the Web/index.html(.in) file for information about installing the package.
 
