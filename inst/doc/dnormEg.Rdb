@@ -78,7 +78,7 @@ This is a high-level function that uses the
 following libNVVM steps:
 <r:code eval="false">
 prog = createProgram()
-addModuleToProgram(prog, txt, "dnorm")
+addModuleToProgram(prog, ir, "dnorm")
 compileProgram(prog, character())
 n = getCompiledResultSize(prog)
 ptx = getCompiledResult(prog, n)

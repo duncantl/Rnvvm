@@ -20,7 +20,7 @@ generatePTX(irCode, name = as.character(Sys.time()), options = character(),
    parameter or by passing the content within a call to \code{I}.}
   \item{name}{the name of the module/program}
   \item{options}{a character vector of options passed to
-    \code{\link{nvvCompileProgram}}.
+    \code{\link{compileProgram}}.
    The possible options are described in \code{\link{compileProgram}}.}
   \item{prog}{a \code{nvvmProgram} object used to compile the
   code. Often we are compiling a single block of code and so can use a
