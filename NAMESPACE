@@ -10,7 +10,7 @@ export(
 addModuleToProgram,
 compileProgram,
 createProgram,
-destroyProgram,
+#destroyProgram,
 getCompiledResultSize,
 getErrorString,
 getProgramLogSize,
