@@ -1,24 +1,27 @@
 ; ModuleID = 'Dnorm'
 
-@pi = constant double 0x400921FB54442D18
+; @pi = constant float 0x400921FB54442D18
 
-define double @Dnorm(double %x, double %mu, double %sd) {
+define float @Dnorm(float %x, float %mu, float %sd) {
 entry:
-  %0 = call double @pow(double %sd, double 2.000000e+00)
-  %"2 * 3.14159265358979 * sd^2" = fmul double 0x401921FB54442D18, %0
-  %1 = call double @sqrt(double %"2 * 3.14159265358979 * sd^2")
-  %"1/sqrt(2 * 3.14159265358979 * sd^2)" = fdiv double 1.000000e+00, %1
-  %"x - mu" = fsub double %x, %mu
-  %"(x - mu)/sd" = fdiv double %"x - mu", %sd
-  %2 = call double @pow(double %"(x - mu)/sd", double 2.000000e+00)
-  %"-0.5 * ((x - mu)/sd)^2" = fmul double -5.000000e-01, %2
-  %3 = call double @exp(double %"-0.5 * ((x - mu)/sd)^2")
-  %"1/sqrt(2 * 3.14159265358979 * sd^2) * exp(-0.5 * ((x - mu)/sd)^2)" = fmul double %"1/sqrt(2 * 3.14159265358979 * sd^2)", %3
-  ret double %"1/sqrt(2 * 3.14159265358979 * sd^2) * exp(-0.5 * ((x - mu)/sd)^2)"
+  %0 = call float @pow(float %sd, float 2.000000e+00)
+  %"2 * 3.14159265358979 * sd^2" = fmul float 0x401921FB54442D18, %0
+  %1 = call float @sqrt(float %"2 * 3.14159265358979 * sd^2")
+  %"1/sqrt(2 * 3.14159265358979 * sd^2)" = fdiv float 1.000000e+00, %1
+  %"x - mu" = fsub float %x, %mu
+  %"(x - mu)/sd" = fdiv float %"x - mu", %sd
+  %2 = call float @pow(float %"(x - mu)/sd", float 2.000000e+00)
+  %"-0.5 * ((x - mu)/sd)^2" = fmul float -5.000000e-01, %2
+  %3 = call float @exp(float %"-0.5 * ((x - mu)/sd)^2")
+  %"1/sqrt(2 * 3.14159265358979 * sd^2) * exp(-0.5 * ((x - mu)/sd)^2)" = fmul float %"1/sqrt(2 * 3.14159265358979 * sd^2)", %3
+  ret float %"1/sqrt(2 * 3.14159265358979 * sd^2) * exp(-0.5 * ((x - mu)/sd)^2)"
 }
 
-declare double @exp(double)
+declare float @exp(float)
 
-declare double @sqrt(double)
+declare float @sqrt(float)
 
-declare double @pow(double, double)
+declare float @pow(float, float)
+
+!nvvm.annotations = !{!1}
+!1 = metadata !{void (float*,float,float)* @Dnorm, metadata !"kernel", i32 1}

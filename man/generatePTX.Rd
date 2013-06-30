@@ -8,7 +8,12 @@
   directly as content.
 }
 \usage{
-generatePTX(irCode, name = as.character(Sys.time()), options = character(),
+generatePTX(irCode, 
+            name = if(isFile) 
+                      irCode 
+                   else 
+                      as.character(Sys.time()),
+            options = character(),
             prog = createProgram(),
            isFile = !is(irCode, "AsIs") && (length(irCode) == 1 && file.exists(irCode)))
 }
