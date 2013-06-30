@@ -1,4 +1,4 @@
-PKG=RD3Device
+PKG=Rnvvm
 WEB_DIR=www.omegahat.org:~/OmegaWeb/$(PKG)
 
 
