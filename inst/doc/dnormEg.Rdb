@@ -75,8 +75,7 @@ following libNVVM steps:
 prog = createProgram()
 addModuleToProgram(prog, txt, "dnorm")
 compileProgram(prog, character())
-n = getCompiledResultSize(prog)
-ptx = getCompiledResult(prog, n)
+ptx = getCompiledResult(prog)
 </r:code>
 </para>
 
