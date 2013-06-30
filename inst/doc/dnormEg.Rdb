@@ -2,6 +2,7 @@
 <article xmlns:r="http://www.r-project.org"
          xmlns:xi="http://www.w3.org/2003/XInclude">
 
+  <!-- http://llvm.org/docs/NVPTXUsage.html  -->
 <articleinfo>
 
 <title></title>
@@ -49,11 +50,15 @@ computations in parallel on a GPU.
 </para>
 
 <para>
-We now compile this code into <llvm/> IR using the <omg:pkg>RLLVMCompile</omg:pkg>
-package using 
+We now compile this code into <llvm/> IR using the
+<omg:pkg>RLLVMCompile</omg:pkg>.  We'll use floats rather than doubles
+for the GPU: <note><para>Fix the compiler to handle float.  Perhaps
+problem is that in sd^2 the two values have different types - float
+and numeric.  So we have to bend 2 to be a float in this case.
+</para></note>
 <r:code>
 library(RLLVMCompile)
-fc = compileFunction(Dnorm, DoubleType, list(DoubleType, DoubleType, DoubleType))
+fc = compileFunction(Dnorm, FloatType, list(FloatType, FloatType, FloatType))
 </r:code>
 This creates a module and we can view the IR code with 
 <r:func>showModule</r:func>.
@@ -73,7 +78,7 @@ This is a high-level function that uses the
 following libNVVM steps:
 <r:code eval="false">
 prog = createProgram()
-addModuleToProgram(prog, txt, "dnorm")
+addModuleToProgram(prog, ir, "dnorm")
 compileProgram(prog, character())
 ptx = getCompiledResult(prog)
 </r:code>
