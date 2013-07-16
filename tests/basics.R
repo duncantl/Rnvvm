@@ -1,5 +1,5 @@
 library(Rnvvm)
-library(RCUDA)
+#library(RCUDA)
 
 ll = readLines(system.file("sampleCode", "simple-gpu64.ll", package = "Rnvvm"))
 
@@ -19,6 +19,6 @@ if(require(RCUDA)) {
  mod$simple
  N = 512*32*32
  ans = integer(N)
- .gpu(mod$simple, ans, gridDim = c(512, 32), blockDim = 32)
+ ans = .gpu(mod$simple, ans, gridDim = c(512, 32), blockDim = 32)
 }
 
