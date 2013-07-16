@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<link rel="stylesheet" href="http://www.omegahat.org/OmegaTech.css">
+<title>Rnvvm</title>
+</head>
+
+<body>
+<h1>Rnvvm</h1>
+
+<p align="right"><a href="@TAR_FILE@">@TAR_FILE@</a></p>
+<p align="right"><a href="https://github.com/duncantl/Rnvvm">Rnvvm on github</a></p>
+<p>
+
+
+This package is an R interface to libNVVM - a library
+that converts LLVM code (in intermediate representation (IR)
+form) to PTX  code that can be loaded and run on a GPU.
+One aim of this package is to be able to
+compile R code to LLVM using the <a href="../Rllvm">Rllvm</a> and <a
+href="../RLLVMCompile">RLLVMCompile</a> packages, 
+and then to convert it to PTX code.
+We then run this code on the GPU with the <a href="../RCUDA">RCUDA</a>
+package.
+
+<p>
+As of release candidated 5.5, libNVVM is released as part of the
+<a href="https://developer.nvidia.com/cuda-downloads">CUDA SDK</a>
+distributed by NVIDIA.
+
+
+<h2>Installation</h2>
+When installing this package, the configuration
+script will look for the collection of nvvm  files, i.e. nvvm.h header
+and the compiled DLL/DSO.
+It looks in the typical locations, i.e. /usr/local/cuda/nvvm or
+/usr/local/cuda-5.5/nvvm.
+If you have installed nvvm in a different location, specify this by
+setting the environment variable <code>LIBNVVM_HOME</code> to
+the nvvm/ directory which contains the include/ and lib64/ directories.
+
+
+
+<hr>
+<address><a href="http://www.stat.ucdavis.edu/~duncan">Duncan Temple Lang</a>
+<a href=mailto:dtemplelang@ucdavis.edu>&lt;dtemplelang@ucdavis.edu&gt;</a></address>
+<!-- hhmts start -->
+Last modified: Sun Jun 30 06:34:11 PDT 2013
+<!-- hhmts end -->
+</body> </html>

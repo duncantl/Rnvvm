@@ -94,6 +94,17 @@ mod = cuModuleLoadDataEx(ptx)
 </r:code>
 </para>
 
+<para>
+We can now invoke the kernel.
+We'll use 1 million observations:
+<r:code>
+N = 1e6L
+x = rnorm(N)
+.gpu(mod$Dnorm, x, 0, 1, output = numeric(N), gridDim = c(256, 128), blockDim = 32, output = "ans")
+</r:code>
+</para>
+
+
 
 
 </section>
